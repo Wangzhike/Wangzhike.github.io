@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Module,Package,Import,Cirular Imports,Relative Imports,namespace," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="basic footnote1 1. 模块1.1 什么是模块在Python中，一个.py文件就是一个模块，一般情况下，模块的名字就是文件名，但是不带.py后缀。举个例子，一个abc.py的文件就是一个名字叫abc的模块，一个xyz.py的文件就是一个名字叫xyz的模块。">
+<meta name="keywords" content="Module,Package,Import,Cirular Imports,Relative Imports,namespace">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python的模块与包">
+<meta property="og:url" content="https://wangzhike.github.io/posts/125cf81d/index.html">
+<meta property="og:site_name" content="秋雨的blog">
+<meta property="og:description" content="basic footnote1 1. 模块1.1 什么是模块在Python中，一个.py文件就是一个模块，一般情况下，模块的名字就是文件名，但是不带.py后缀。举个例子，一个abc.py的文件就是一个名字叫abc的模块，一个xyz.py的文件就是一个名字叫xyz的模块。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-05T14:17:54.574Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python的模块与包">
+<meta name="twitter:description" content="basic footnote1 1. 模块1.1 什么是模块在Python中，一个.py文件就是一个模块，一般情况下，模块的名字就是文件名，但是不带.py后缀。举个例子，一个abc.py的文件就是一个名字叫abc的模块，一个xyz.py的文件就是一个名字叫xyz的模块。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wangzhike.github.io/posts/125cf81d/"/>
+
+
+
+
+
+  <title>python的模块与包 | 秋雨的blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?712a047641a66966cb276f7462cebb27";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">秋雨的blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术为主，偶尔杂谈</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wangzhike.github.io/posts/125cf81d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="秋雨mac">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="秋雨的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python的模块与包</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-04T23:22:54+08:00">
+                2017-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+                   >
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                   >
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/Python/语法基础/" itemprop="url" rel="index">
+                    <span itemprop="name">语法基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/125cf81d/" class="leancloud_visitors" data-flag-title="python的模块与包">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  3,036
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>basic footnote<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+<h2 id="1-模块"><a href="#1-模块" class="headerlink" title="1. 模块"></a>1. 模块</h2><h3 id="1-1-什么是模块"><a href="#1-1-什么是模块" class="headerlink" title="1.1 什么是模块"></a>1.1 什么是模块</h3><p>在Python中，一个<em>.py</em>文件就是一个模块，<strong>一般情况下</strong>，模块的名字就是<strong>文件名，但是不带<em>.py</em>后缀</strong>。<br>举个例子，一个<code>abc.py</code>的文件就是一个名字叫<code>abc</code>的模块，一个<code>xyz.py</code>的文件就是一个名字叫<code>xyz</code>的模块。<br><a id="more"></a><br>模块的名字保存在全局变量<code>__name__</code>中。<br>模块可以被导入到<strong>其他模块</strong>，也可以被导入到<strong>主模块(main module)</strong>。主模块是脚本在顶层或计算器模式下执行时你能访问的所有变量的集合，也就是说当该模块作为脚本执行时它就是被导入到主模块。<br>前面提到，一般情况下，模块的名字就是文件名，而<strong>当模块作为脚本执行时，就是特殊情况</strong>。<br>当模块作为脚本执行时，<code>__name__</code>被设置为<code>__main__</code>。<code>__main__</code>是顶层代码执行作用域的名字。通过判断<code>__name__</code>的值，我们可以知道模块是否正在被当做脚本执行，同样也可以选择性地执行某些代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">	<span class="comment"># execute only if run as a script</span></div><div class="line">	<span class="comment"># you code is here</span></div></pre></td></tr></table></figure></p>
+<h3 id="1-2-模块的命名空间"><a href="#1-2-模块的命名空间" class="headerlink" title="1.2 模块的命名空间"></a>1.2 模块的命名空间</h3><p>模块化组织代码有很多好处，实现功能分割与解耦，提高代码的可维护性。其次，模块的代码可以在其他地方引用等等。<br>其中很重要的一点就是可以避免函数名和变量名冲突。<br>每一个模块有自己的私有符号表，<em>保存在模块自己的命名空间中(此处为个人总结，可能有错误！)</em>。对于模块内部的函数而言，这个私有符号表就是全局符号表，因此可以自由访问模块中定义的变量。同时不同模块各自拥有独立的私有符号表，这就使不同模块的作者不用担心自己模块中使用的变量名会和其他作者模块中的变量名冲突。</p>
+<h3 id="1-3-导入模块"><a href="#1-3-导入模块" class="headerlink" title="1.3 导入模块"></a>1.3 导入模块</h3><h5 id="1-3-1-导入模块的两种方式"><a href="#1-3-1-导入模块的两种方式" class="headerlink" title="1.3.1 导入模块的两种方式"></a>1.3.1 导入模块的两种方式</h5><p>Python提供了至少两种方式导入一个模块。</p>
+<ol>
+<li><p><code>import X</code><br>导入模块<em>X</em>，并且<strong>以<em>X</em>的命名空间为名字</strong>将<em>X</em>中定义的变量导入到当前的命名空间。换而言之，在你执行这个语句之后，你能用<code>X.name</code>引用模块<em>X</em>中定义的对应变量。</p>
+</li>
+<li><p><code>from X import *</code><br>导入模块<em>X</em>，并且<strong>直接以<em>X</em>中定义的变量名为名字</strong>将<em>X</em>中定义的公有变量(名字不是以下划线<code>_</code>开头的变量)导入到当前的命名空间。换而言之，当你执行玩这个语句之后，你可以直接使用变量名，而不用加<em>X.</em>前缀来引用模块<em>X</em>中定义的对应变量。但是模块名<em>X</em>本身没有被定义，所以<code>X.name</code>这样形式的语句是错误的。同时，如果在此之后改变了模块<em>X</em>中某些变量的定义，在当前的命名空间中不会进行更新。<br><strong>注意<code>import *</code>是一种不建议使用的写法，因为它引入的变量名可能会与当前命名空间中之前已经定义过的变量名同名，产生命名冲突，从而覆盖掉之前同名变量的定义，这是一个让人很难检查出的问题。</strong>在交互式环境，如<em>IPython</em>，Python自带的<em>shell</em>等环境下，可以使用这种写法。</p>
+</li>
+<li><p><code>from X import a, b, c</code><br>这个其实仍然属于第二种方式，导入模块<em>X</em>，并且<strong>直接以<em>X</em>中定义的变量名为名字</strong>将<em>X</em>中给定的公有变量导入到当前的命名空间。换而言之，你可以在程序中使用<code>a</code>，<code>b</code>，<code>c</code>这三个变量。</p>
+</li>
+</ol>
+<h5 id="1-3-2-导入模块的内部机制"><a href="#1-3-2-导入模块的内部机制" class="headerlink" title="1.3.2 导入模块的内部机制"></a>1.3.2 导入模块的内部机制</h5><p>当Python导入一个模块时，它首先在<strong>模块注册表(<em>sys.modules</em>)</strong>中检查是否有该模块，如果有则直接从已经存在的模块对象的命名空间中按照对应的<code>import</code>语句导入变量。<br>如果该模块不存在，它的执行流程如下：</p>
+<ol>
+<li>创建一个新的空的模块对象，此时该模块的命名空间为空</li>
+<li>将该模块对象插入到<em>sys.modules</em>字典</li>
+<li>加载该模块代码，必要时先变异该模块</li>
+<li>在该模块的命名空间下执行模块中的代码，代码中所有被定义的变量(包括变量，函数，类)都将被添加到模块的命名空间里</li>
+</ol>
+<p>也就是说，当模块第一次被正在执行的脚本导入时，Python会转而执行该模块中的代码来初始化该模块的命名空间。当其他模块第二次导入该模块时，由于该模块已经存在于<strong>模块注册表<em>sys.modules</em></strong>中，它将不会被再次加载，所以模块中定义的变量仅仅被初始化了一次。</p>
+<h5 id="1-3-3-循环导入-Cirular-Imports"><a href="#1-3-3-循环导入-Cirular-Imports" class="headerlink" title="1.3.3 循环导入(Cirular Imports)"></a>1.3.3 循环导入(Cirular Imports)</h5><p>当执行<code>import</code>语句导入模块时，程序将转而执行该模块中的代码，而模块中定义的变量，比如<code>def</code>，<code>class</code>还不存在于模块的命名空间直到执行到<code>def</code>或<code>class</code>对应的定义语句，它们才会被添加到命名空间。<br>考虑这样一种情况：<br>在模块<em>X</em>中将导入模块<em>Y</em>，同时定义了一个名为<em>spam</em>的函数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># module X</span></div><div class="line"><span class="keyword">import</span> Y</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">spam</span><span class="params">()</span>:</span></div><div class="line">	print(<span class="string">'function in module X'</span>)</div></pre></td></tr></table></figure></p>
+<p>如果在主程序中导入模块<em>X</em>，Python将加载<em>X</em>的代码并执行它。当遇到<code>import Y</code>语句时，它将加载模块<em>Y</em>的代码并跳转到<em>Y</em>执行。<br>此时，Python已经将<em>X</em>和<em>Y</em>添加到了模块注册表<em>sys.modules</em>中，但是此时<em>X</em>的命名空间还为空，不包含任何变量，而<code>import Y</code>之后紧跟的<code>def spam</code>函数定义也没有执行。<br>如果模块<em>Y</em>中又导入了<em>X</em>，就构成了循环导入，而循环导入极有可能产生错误。当模块<em>Y</em>又导入<em>X</em>时，它将首先检查<em>sys.modules</em>，此时<em>X</em>已经存在，所以它将引用<em>X</em>空的命名空间，因为<em>X</em>的命名空间为空，所以此时任何尝试访问<em>X.spam</em>的语句，都将产生错误。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># module Y</span></div><div class="line"><span class="keyword">from</span> X <span class="keyword">import</span> spam <span class="comment"># doesn't work: spam isn't defined yet!</span></div></pre></td></tr></table></figure></p>
+<p>同样下面的代码也会遇到错误：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># module Y</span></div><div class="line"><span class="keyword">import</span> X</div><div class="line"></div><div class="line">X.spam() <span class="comment"># doesn't work either: spam isn't defined yet!</span></div></pre></td></tr></table></figure></p>
+<p>要解决这个错误，有两种方法：</p>
+<ol>
+<li>将模块<em>X</em>和<em>Y</em>中都要引用的变量定义移动到一个独立的文件中，<em>X</em>和<em>Y</em>都从这个文件中引用需要的变量</li>
+<li>将<code>import</code>语句移动到模块的结尾<br>如果将模块<em>X</em>中的<code>import Y</code>语句移动到结尾，可以解决这个问题。</li>
+</ol>
+<h5 id="1-3-4-模块的搜索路径"><a href="#1-3-4-模块的搜索路径" class="headerlink" title="1.3.4 模块的搜索路径"></a>1.3.4 模块的搜索路径</h5><p>当导入一个名为<em>spam</em>的模块时，Python的搜索顺序如下：</p>
+<ol>
+<li>在内置模块(bulit-in module)查找对应的模块名</li>
+<li>未命中，则在<code>sys.path</code>列表给出的目录列表中查找名为<em>spam.py</em>的文件<br>而<em>sys.path</em>以下面的先后顺序进行初始化：</li>
+<li>添加输入脚本所在的目录(如果没有指定脚本则为当前目录)</li>
+<li>添加系统变量<code>PYTHONPATH</code>指定的目录列表，<code>PYTHONPATH</code>类似与shell变量<code>PATH</code></li>
+<li>添加Python的安装路径的目录</li>
+</ol>
+<p>注意，在初始化<em>sys.path</em>之后，Python会修改<em>sys.path</em>，将执行脚本所在的目录放在搜索列表的最前面，位于标准库目录的前面。这就意味着当脚本所在目录存在和标准库模块同名的模块时，Python将加载脚本所在目录的模块而不是标准库中的模块，这也是一个常见的不好排查的错误。<br>为了避免自己定义的模块与标准库冲突，从而需要引入包的概念。</p>
+<h3 id="2-包"><a href="#2-包" class="headerlink" title="2. 包"></a>2. 包</h3><h5 id="2-1-什么是包"><a href="#2-1-什么是包" class="headerlink" title="2.1 什么是包"></a>2.1 什么是包</h5><p>包是一种通过”dotted module names”的引用方式来构造模块命名空间的方法。<br>Python中的包是一个目录但必须包含一个特殊的名为<code>__init__.py</code>的文件，最简单的该文件可以为空，也可以包含该模块的初始化代码或设置<code>__all__</code>变量的值。该文件表明该目录是一个可导入的包，而不是一个普通目录。<br>就像，模块名<em>A.B</em>在一个名为<em>A</em>的包中指定了一个名为<em>B</em>的子模块。<br>通过引入模块，使不同模块的作者不用担心彼此模块中的全局变量名产生冲突。类似的，引入包采用”dotted module names”的方式使不同的多模块包的作者不用担心彼此模块名产生冲突。</p>
+<h5 id="2-2-导入包"><a href="#2-2-导入包" class="headerlink" title="2.2 导入包"></a>2.2 导入包</h5><h6 id="2-2-1-导入包的不同形式"><a href="#2-2-1-导入包的不同形式" class="headerlink" title="2.2.1 导入包的不同形式"></a>2.2.1 导入包的不同形式</h6><ol>
+<li><code>from package import item</code><br><em>item</em>可以是一个子模块或子包，也可以是<em>package</em>中定义的函数，类或变量。该语句首先检查<em>item</em>是不是<em>package</em>中定义的变量(package所在目录下的<strong>init</strong>.py文件中是否有<em>item</em>变量的定义)，如果不是，则假设<em>item</em>是一个模块，并尝试加载它，如果失败，会抛出<code>ImportError</code>异常。</li>
+<li><code>import item.subitem.subsubitem</code><br>除了最后一个<em>subsubitem</em>，其余的所有的<em>item</em>,<em>subitem</em>都必须是一个包，最后一个<em>subsubitem</em>可以是一个模块或者包，但不能是<em>subitem</em>中定义的函数，类或变量。</li>
+<li><code>from package import *</code><br>如果<code>__init__.py</code>中定义了一个列表变量<code>__all__</code>，将导入与<code>__all__</code>中包含的所有字符串同名的那些模块。<br>如果<code>__init__.py</code>中没有定义<code>__all__</code>，并不会像<code>from module import *</code>会导入模块中所有公有变量到当前命名空间那样，导入包中含有的所有子模块到当前命名空间。<br>而是仅确保该包名被导入，同时如果<code>__init__.py</code>不为空还执行其中的代码，这样就又会导入<code>__init__.py</code>文件中定义的所有名字，包括其中通过<code>import</code>语句导入的模块名。<br>比如下面的例子：<br>包的结构如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">|- A/</div><div class="line"> |- __init__.py</div><div class="line"> |- a.py</div><div class="line"> |- b.py</div><div class="line"> |- c.py</div><div class="line"> |- B/</div><div class="line"> |- __init__.py</div><div class="line"> |- a.py</div><div class="line"> |- b.py</div><div class="line"> |- c.py</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在<em>A/</em>所在目录下进入交互式环境，执行<code>from B import *</code>代码，而<code>A/B/__init__.py</code>内容如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Subpackage B init.'</span>)</div><div class="line"><span class="keyword">import</span> a</div><div class="line"><span class="keyword">from</span> B <span class="keyword">import</span> b</div></pre></td></tr></table></figure></p>
+<p>输出如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Subpackage B init.</div></pre></td></tr></table></figure></p>
+<p>继续执行：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>B</div><div class="line">&lt;module <span class="string">'B'</span> <span class="keyword">from</span> <span class="string">'/home/qiuyu/code/Web/moduleNameSpace/A/B/__init__.py'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>B.a</div><div class="line">&lt;module <span class="string">'a'</span> <span class="keyword">from</span> <span class="string">'/home/qiuyu/code/Web/moduleNameSpace/A/a.py'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>B.b</div><div class="line">&lt;module <span class="string">'B.b'</span> <span class="keyword">from</span> <span class="string">'/home/qiuyu/code/Web/moduleNameSpace/A/B/b.py'</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>由于是从<em>A/</em>所在目录进入交互式环境的，所以<em>sys.path</em>搜索目录列表的第一项是<em>A/</em>所在的目录，所以<code>import a</code>导入的是<em>A/</em>目录下的<em>a.py</em>模块，而<code>from B import b</code>首先检查到<em>b</em>不是包<em>B</em>中定义的变量，所以假设<em>b</em>是一个模块而尝试导入它，这样就导入了<em>A/B/b.py</em>模块。</p>
+<h6 id="2-2-2-包内引用-相对导入"><a href="#2-2-2-包内引用-相对导入" class="headerlink" title="2.2.2 包内引用/相对导入"></a>2.2.2 包内引用/相对导入</h6><p>当一个包中含有子包时，你可以通过在当前包中通过绝对导入引入兄弟包中的模块，也可以通过相对导入来引入模块。相对导入使用”leading dots”来指示当前包和父包。<br>“.”表示当前包所在目录，”..”表示父包所在目录。所以上面的<code>from B import b</code>也可以改写为<code>from .B import b</code>。<br>注意，<em>**相对导入依赖于当前模块的名字</em>。当该模块作为主模块导入时，其<code>__name__</code>的值为<code>__main__</code>，而<code>__main__</code>没有提供模块的真实名字，不能使用相对导入。也就是说，当一个模块作为主模块使用时，只能使用绝对导入。</p>
+<h4 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h4><ol>
+<li><a href="http://effbot.org/zone/import-confusion.htm#circular-imports" target="_blank" rel="external">Importing Python Modules</a></li>
+<li><a href="https://www.learnpython.org/en/Modules_and_Packages" target="_blank" rel="external">Modules and Packages - Learn Python - Free Interactive Python Tutorial</a></li>
+<li><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318447437605e90206e261744c08630a836851f5183000" target="_blank" rel="external">模块 - 廖雪峰的官方网站</a></li>
+<li><a href="https://docs.python.org/3/tutorial/modules.html#modules" target="_blank" rel="external">6. Modules — Python 3.6.2 documentation</a></li>
+<li><a href="https://docs.python.org/3.6/library/__main__.html?highlight=__main__#module-__main__" target="_blank" rel="external">29.4. <strong>main</strong> — Top-level script environment — Python 3.6.2 documentation</a></li>
+</ol>
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style:none; padding-left: 0;"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">1.</span><span style="display: inline-block; vertical-align: top;">basic footnote content</span><a href="#fnref:1" rev="footnote"> ↩</a></li></ol></div></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，如果您喜欢可以支持我！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat_reward.jpg" alt="秋雨mac WeChat Pay"/>
+        <p>微信</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay_reward.jpg" alt="秋雨mac Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    秋雨mac
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wangzhike.github.io/posts/125cf81d/" title="python的模块与包">https://wangzhike.github.io/posts/125cf81d/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tags/Module/" rel="tag"><i class="fa fa-tag"></i> Module</a>
+          
+            
+            <a href="/tags/Package/" rel="tag"><i class="fa fa-tag"></i> Package</a>
+          
+            
+            <a href="/tags/Import/" rel="tag"><i class="fa fa-tag"></i> Import</a>
+          
+            
+            <a href="/tags/Cirular-Imports/" rel="tag"><i class="fa fa-tag"></i> Cirular Imports</a>
+          
+            
+            <a href="/tags/Relative-Imports/" rel="tag"><i class="fa fa-tag"></i> Relative Imports</a>
+          
+            
+            <a href="/tags/namespace/" rel="tag"><i class="fa fa-tag"></i> namespace</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/4a17b156/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- MOB SHARE BEGIN -->
+<div class="-mob-share-ui-button -mob-share-open">分享</div>
+<div class="-mob-share-ui" style="display: none">
+  <ul class="-mob-share-list">
+    <li class="-mob-share-weibo"><p>新浪微博</p></li>
+    <li class="-mob-share-weixin"><p>微信</p></li>
+    <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+    <li class="-mob-share-douban"><p>豆瓣</p></li>
+    <li class="-mob-share-qq"><p>QQ好友</p></li>
+    <li class="-mob-share-qzone"><p>QQ空间</p></li>
+  </ul>
+  <div class="-mob-share-close">取消</div>
+</div>
+<div class="-mob-share-ui-bg"></div>
+<!-- <div style="display: inline-block">
+  <strong>分享至：</strong>
+  <ul>
+    <li class="-mob-share-weibo">
+      <i class="fa fa-weibo fa-2x"></i>新浪微博
+    </li>
+    <li class="-mob-share-weixin">
+      <i class="fa fa-weixin fa-2x"></i>微信
+    </li>
+    <li class="-mob-share-youdao">
+      <i class="fa fa-bookmark fa-2x"></i>有道云笔记
+    </li>
+    <li class="-mob-share-douban">
+      <i class="fa fa-tag fa-2x"></i>豆瓣
+    </li>
+    <li class="-mob-share-qq">
+      <i class="fa fa-qq fa-2x"></i>QQ
+    </li>
+    <li class="-mob-share-qzon">
+      <i class="fa fa-qq fa-2x"></i>QQ空间
+    </li>
+  </ul>
+</div>
+<style type="text/css">
+ul {
+	list-style: none;
+}
+li {
+	display: inline;
+	margin-left: 15px
+}
+</style> -->
+<script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=1ff795f36a0e0"></script>
+<!-- MOB SHARE END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+	  
+	    <div id="gitment-container"></div>
+	  
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="秋雨mac" />
+          <p class="site-author-name" itemprop="name">秋雨mac</p>
+           
+              <p class="site-description motion-element" itemprop="description">秋雨的blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Wangzhike" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3224495082/profile?rightmod=1&wvr=6&mod=personinfo" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      微博
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/qiuxiaoyu201211/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-quora"></i>
+                  
+                    
+                      知乎
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-模块"><span class="nav-number">1.</span> <span class="nav-text">1. 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-什么是模块"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么是模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-模块的命名空间"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 模块的命名空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-导入模块"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 导入模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-1-导入模块的两种方式"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">1.3.1 导入模块的两种方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-2-导入模块的内部机制"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">1.3.2 导入模块的内部机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-3-循环导入-Cirular-Imports"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">1.3.3 循环导入(Cirular Imports)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-4-模块的搜索路径"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">1.3.4 模块的搜索路径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-包"><span class="nav-number">1.4.</span> <span class="nav-text">2. 包</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-什么是包"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">2.1 什么是包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-导入包"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">2.2 导入包</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-1-导入包的不同形式"><span class="nav-number">1.4.0.2.1.</span> <span class="nav-text">2.2.1 导入包的不同形式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-2-包内引用-相对导入"><span class="nav-number">1.4.0.2.2.</span> <span class="nav-text">2.2.2 包内引用/相对导入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文献"><span class="nav-number">1.4.1.</span> <span class="nav-text">参考文献</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">秋雨mac</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  博客 -
+  秋雨的blog
+  
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+    
+    
+    
+    
+    <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+    <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+    
+      <script type="text/javascript">
+        var gitment = new Gitment({
+          id: document.location.href, 
+          owner: 'Wangzhike',
+          repo: 'Wangzhike.github.io',
+          oauth: {
+            client_id: '------',
+            client_secret: '------',
+          }});
+        gitment.render('gitment-container');
+      </script>
+    
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Njx4Ne9mGBb7pcb9o7LnU7pS-gzGzoHsz", "PeEBRXFsg7dSNhNWG7Cc8jGS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
