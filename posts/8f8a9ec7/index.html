@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Linux,Shell,Vim," />
 
 
 
@@ -94,16 +94,18 @@
 
 
 
-<meta name="description" content="秋雨的blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="秋雨的blog">
-<meta property="og:url" content="https://wangzhike.github.io/tags/环境变量/index.html">
+<meta name="description" content="1. 简介半年之前，我大概花了一周的时间折腾Ubuntu环境下的Vim，可能有人还不清楚，Ubuntu自带的vimvi，是vim的tiny版本，之所以预装这个tiny版本，是因为它足够小，而且能够满足一般的编辑需求，但是该tiny版本不能使用小键盘和方向键，这就造成了一个令人发狂的问题：在编辑模式下，移动光标会变成A B C D等字符并换行，而不是原来的上下左右移动，相信这个问题会让许多人和我一样">
+<meta name="keywords" content="Linux,Shell,Vim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim配置及插件安装自动化脚本">
+<meta property="og:url" content="https://wangzhike.github.io/posts/8f8a9ec7/index.html">
 <meta property="og:site_name" content="秋雨的blog">
-<meta property="og:description" content="秋雨的blog">
+<meta property="og:description" content="1. 简介半年之前，我大概花了一周的时间折腾Ubuntu环境下的Vim，可能有人还不清楚，Ubuntu自带的vimvi，是vim的tiny版本，之所以预装这个tiny版本，是因为它足够小，而且能够满足一般的编辑需求，但是该tiny版本不能使用小键盘和方向键，这就造成了一个令人发狂的问题：在编辑模式下，移动光标会变成A B C D等字符并换行，而不是原来的上下左右移动，相信这个问题会让许多人和我一样">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-25T14:28:02.986Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="秋雨的blog">
-<meta name="twitter:description" content="秋雨的blog">
+<meta name="twitter:title" content="Vim配置及插件安装自动化脚本">
+<meta name="twitter:description" content="1. 简介半年之前，我大概花了一周的时间折腾Ubuntu环境下的Vim，可能有人还不清楚，Ubuntu自带的vimvi，是vim的tiny版本，之所以预装这个tiny版本，是因为它足够小，而且能够满足一般的编辑需求，但是该tiny版本不能使用小键盘和方向键，这就造成了一个令人发狂的问题：在编辑模式下，移动光标会变成A B C D等字符并换行，而不是原来的上下左右移动，相信这个问题会让许多人和我一样">
 
 
 
@@ -132,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://wangzhike.github.io/tags/环境变量/"/>
+  <link rel="canonical" href="https://wangzhike.github.io/posts/8f8a9ec7/"/>
 
 
 
 
 
-  <title>标签: 环境变量 | 秋雨的blog</title>
+  <title>Vim配置及插件安装自动化脚本 | 秋雨的blog</title>
   
 
 
@@ -173,7 +175,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -311,54 +313,404 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>环境变量<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wangzhike.github.io/posts/8f8a9ec7/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="秋雨mac">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="秋雨的blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/posts/13ffbe88/" itemprop="url">
-              
-                <span itemprop="name">变量</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Vim配置及插件安装自动化脚本</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-23T09:52:13+08:00"
-              content="2017-08-23" >
-          08-23
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-25T20:52:02+08:00">
+                2017-08-25
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+                   >
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+                   >
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/Linux/Shell/" itemprop="url" rel="index">
+                    <span itemprop="name">Shell</span>
+                  </a>
+                </span>
+
+                
+                
+                   >
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/Linux/Shell/Vim/" itemprop="url" rel="index">
+                    <span itemprop="name">Vim</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/posts/8f8a9ec7/" class="leancloud_visitors" data-flag-title="Vim配置及插件安装自动化脚本">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  677
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介">1. 简介</h1><p>半年之前，我大概花了一周的时间折腾Ubuntu环境下的Vim，可能有人还不清楚，Ubuntu自带的<del>vim</del>vi，是vim的tiny版本，之所以预装这个tiny版本，是因为它足够小，而且能够满足一般的编辑需求，但是该tiny版本不能使用小键盘和方向键，这就造成了一个令人发狂的问题：<strong>在编辑模式下，移动光标会变成A B C D等字符并换行，而不是原来的上下左右移动</strong>，相信这个问题会让许多人和我一样困扰！<br>所以配置Vim的过程踩了许多坑，第一个就是卸载这个tiny版本的vim，安装完整的vim，之后是在自己的HOME目录建立自己的配置文件<em>.vimrc</em>，以及添加显示行号，语法高亮等基本配置，再到后面知道可以用Vundle插件管理工具安装各种插件，用Vim打造出类似IDE的开发环境……，不断往<em>.vimrc</em>中添加各种配置，折腾起来就是大半天，而且换台机器，还得重新来一次，简直是累觉不爱。<br>最近在看shell编程，就萌生出写一个自动化脚本，完成在一个新的Ubuntu系统的机器上Vim的配置及插件安装工作，经过几天的努力，终于这个小脚本诞生了！</p>
+<a id="more"></a>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">适用环境</th>
+<th style="text-align:center">脚本地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Ubuntu</td>
+<td style="text-align:center"><a href="https://github.com/Wangzhike/VimConfigScript" target="_blank" rel="external">https://github.com/Wangzhike/VimConfigScript</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>注：表格上的适用环境都已经过验证！</strong></p>
+<h1 id="安装">2. 安装</h1><h2 id="克隆脚本">2. 1. 克隆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/Wangzhike/VimConfigScript.git</div></pre></td></tr></table></figure>
+<h2 id="安装脚本">2. 2. 安装脚本</h2><p>目前脚本自动安装的插件有：</p>
+<ul>
+<li><a href="https://github.com/Valloric/YouCompleteMe" target="_blank" rel="external">自动补全插件YouCompleteMe</a></li>
+<li><a href="https://github.com/vim-syntastic/syntastic" target="_blank" rel="external">语法检查插件syntastic</a></li>
+<li><a href="https://github.com/tmhedberg/SimpylFold" target="_blank" rel="external">代码折叠插件SimpylFold</a></li>
+<li><a href="https://github.com/scrooloose/nerdtree" target="_blank" rel="external">显示文件树/文件目录插件NERDTree</a></li>
+<li><a href="https://github.com/vim-airline/vim-airline" target="_blank" rel="external">状态栏增强插件vim-airline</a></li>
+<li><a href="http://www.vim.org/scripts/script.php?script_id=273" target="_blank" rel="external">查看显示代码文件中的宏，函数，变量定义等的插件taglist</a></li>
+</ul>
+<p>安装：</p>
+<ol>
+<li><p>进入脚本所在目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> cd VimConfigScript</div></pre></td></tr></table></figure>
+</li>
+<li><p>执行脚本<code>configVim.sh</code><br>目前脚本支持三种命令行参数：</p>
+<ul>
+<li><code>./configVim.sh -all</code>或<code>./configVim.sh</code><br>会安装上面提到的所有插件</li>
+<li><code>./configVim.sh -s [Plugin1] [Plugin2] ... [PluginN]</code><br>会安装<code>-s</code>后面指定的插件，插件名字之间以空格分隔</li>
+<li><code>./configVim.sh -v [Plugin1] [Plugin2] ... [PluginN]</code><br>除了<code>-v</code>后面指定的插件外，安装上面提到的所有插件<br>注：<br>插件名称列表如下：</li>
+<li>YouCompleteMe</li>
+<li>Syntasitic</li>
+<li>SimplyFold</li>
+<li>NERDTree</li>
+<li>AirLine</li>
+<li>Taglist<br>举例：</li>
+</ul>
+<ol>
+<li><p>只安装Syntastic SimplyFold Taglist插件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> ./configVim.sh -s Syntastic SimpylFold Taglist</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装除了YouCompleteMe以外的所有插件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> ./configVim.sh -v YouCompleteMe</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<p>欢迎各位适用以及改进，如有问题可以评论留言，一直努力打造更好用的Vim环境。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，如果您喜欢可以支持我！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat_reward.jpg" alt="秋雨mac WeChat Pay"/>
+        <p>微信</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay_reward.jpg" alt="秋雨mac Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    秋雨mac
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wangzhike.github.io/posts/8f8a9ec7/" title="Vim配置及插件安装自动化脚本">https://wangzhike.github.io/posts/8f8a9ec7/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          
+            
+            <a href="/tags/Shell/" rel="tag"><i class="fa fa-tag"></i> Shell</a>
+          
+            
+            <a href="/tags/Vim/" rel="tag"><i class="fa fa-tag"></i> Vim</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/13ffbe88/" rel="next" title="变量">
+                <i class="fa fa-chevron-left"></i> 变量
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+        <!-- MOB SHARE BEGIN -->
+<div class="-mob-share-ui-button -mob-share-open">分享</div>
+<div class="-mob-share-ui" style="display: none">
+  <ul class="-mob-share-list">
+    <li class="-mob-share-weibo"><p>新浪微博</p></li>
+    <li class="-mob-share-weixin"><p>微信</p></li>
+    <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+    <li class="-mob-share-douban"><p>豆瓣</p></li>
+    <li class="-mob-share-qq"><p>QQ好友</p></li>
+    <li class="-mob-share-qzone"><p>QQ空间</p></li>
+  </ul>
+  <div class="-mob-share-close">取消</div>
+</div>
+<div class="-mob-share-ui-bg"></div>
+<!-- <div style="display: inline-block">
+  <strong>分享至：</strong>
+  <ul>
+    <li class="-mob-share-weibo">
+      <i class="fa fa-weibo fa-2x"></i>新浪微博
+    </li>
+    <li class="-mob-share-weixin">
+      <i class="fa fa-weixin fa-2x"></i>微信
+    </li>
+    <li class="-mob-share-youdao">
+      <i class="fa fa-bookmark fa-2x"></i>有道云笔记
+    </li>
+    <li class="-mob-share-douban">
+      <i class="fa fa-tag fa-2x"></i>豆瓣
+    </li>
+    <li class="-mob-share-qq">
+      <i class="fa fa-qq fa-2x"></i>QQ
+    </li>
+    <li class="-mob-share-qzon">
+      <i class="fa fa-qq fa-2x"></i>QQ空间
+    </li>
+  </ul>
+</div>
+<style type="text/css">
+ul {
+	list-style: none;
+}
+li {
+	display: inline;
+	margin-left: 15px
+}
+</style> -->
+<script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=1ff795f36a0e0"></script>
+<!-- MOB SHARE END -->
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -366,6 +718,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+	  
+	    <div id="gitment-container"></div>
+	  
+    
+  </div>
+
 
         </div>
         
@@ -386,8 +746,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -484,6 +853,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-text">1. 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-text">2. 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#克隆脚本"><span class="nav-text">2. 1. 克隆脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装脚本"><span class="nav-text">2. 2. 安装脚本</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -616,10 +1001,10 @@
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
