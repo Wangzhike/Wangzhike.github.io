@@ -102,12 +102,12 @@
 <meta property="og:site_name" content="秋雨的blog">
 <meta property="og:description" content="1. 简介半年之前，我大概花了一周的时间折腾Ubuntu环境下的Vim，可能有人还不清楚，Ubuntu自带的vimvi，是vim的tiny版本，之所以预装这个tiny版本，是因为它足够小，而且能够满足一般的编辑需求，但是该tiny版本不能使用小键盘和方向键，这就造成了一个令人发狂的问题：在编辑模式下，移动光标会变成A B C D等字符并换行，而不是原来的上下左右移动，相信这个问题会让许多人和我一样">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://github.com/Wangzhike/VimConfigScript/blob/master/Ubuntu%20Vim.png">
-<meta property="og:updated_time" content="2017-08-25T15:24:15.438Z">
+<meta property="og:image" content="https://github.com/Wangzhike/VimConfigScript/raw/master/Ubuntu%20Vim.png">
+<meta property="og:updated_time" content="2017-08-25T15:30:37.805Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vim配置及插件安装自动化脚本">
 <meta name="twitter:description" content="1. 简介半年之前，我大概花了一周的时间折腾Ubuntu环境下的Vim，可能有人还不清楚，Ubuntu自带的vimvi，是vim的tiny版本，之所以预装这个tiny版本，是因为它足够小，而且能够满足一般的编辑需求，但是该tiny版本不能使用小键盘和方向键，这就造成了一个令人发狂的问题：在编辑模式下，移动光标会变成A B C D等字符并换行，而不是原来的上下左右移动，相信这个问题会让许多人和我一样">
-<meta name="twitter:image" content="https://github.com/Wangzhike/VimConfigScript/blob/master/Ubuntu%20Vim.png">
+<meta name="twitter:image" content="https://github.com/Wangzhike/VimConfigScript/raw/master/Ubuntu%20Vim.png">
 
 
 
@@ -458,7 +458,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  690
+                  691
                 </span>
               
 
@@ -512,7 +512,7 @@
 </tbody>
 </table>
 <p><strong>注：表格上的适用环境都已经过验证！</strong></p>
-<p>无图无真相，最终的效果见下图：<br>!<img src="https://github.com/Wangzhike/VimConfigScript/blob/master/Ubuntu%20Vim.png" alt="Vim"></p>
+<p>无图无真相，最终的效果见下图：<br><img src="https://github.com/Wangzhike/VimConfigScript/raw/master/Ubuntu%20Vim.png" alt="Vim"></p>
 <h1 id="安装">2. 安装</h1><h2 id="克隆脚本">2. 1. 克隆脚本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/Wangzhike/VimConfigScript.git</div></pre></td></tr></table></figure>
 <h2 id="安装脚本">2. 2. 安装脚本</h2><p>目前脚本自动安装的插件有：</p>
 <ul>
@@ -532,12 +532,16 @@
 <ul>
 <li><code>./configVim.sh -all</code>或<code>./configVim.sh</code><br>会安装上面提到的所有插件</li>
 <li><code>./configVim.sh -s [Plugin1] [Plugin2] ... [PluginN]</code><br>会安装<code>-s</code>后面指定的插件，插件名字之间以空格分隔</li>
-<li><code>./configVim.sh -v [Plugin1] [Plugin2] ... [PluginN]</code><br>除了<code>-v</code>后面指定的插件外，安装上面提到的所有插件<br><strong>注：插件名称列表如下：</strong></li>
+<li><code>./configVim.sh -v [Plugin1] [Plugin2] ... [PluginN]</code><br>除了<code>-v</code>后面指定的插件外，安装上面提到的所有插件</li>
+</ul>
+<p><strong>注：插件名称列表如下：</strong></p>
+<ul>
 <li>YouCompleteMe</li>
 <li>Syntasitic</li>
 <li>SimplyFold</li>
 <li>NERDTree</li>
 <li>AirLine</li>
+<li>Taglist</li>
 <li>Taglist<br>举例：</li>
 </ul>
 <ol>
