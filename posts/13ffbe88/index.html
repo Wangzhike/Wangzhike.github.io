@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="1. 变量的显示与设置 设置变量和Python等脚本语言一样，在shell里，使用变量之前并不需要事先为它们做出声明，只是通过使用它们(比如当你给它们赋初始值时)来创建它们。 1VARIABLE_NAME=value">
+<meta name="description" content="1. 变量的显示与设置 设置变量和Python等脚本语言一样，在shell里，使用变量之前并不需要事先为它们做出声明，只是通过使用它们(比如当你给它们赋初始值时)来创建它们。 1$ VARIABLE_NAME=value">
 <meta name="keywords" content="Linux,Shell,环境变量">
 <meta property="og:type" content="article">
 <meta property="og:title" content="变量">
 <meta property="og:url" content="https://wangzhike.github.io/posts/13ffbe88/index.html">
 <meta property="og:site_name" content="秋雨的blog">
-<meta property="og:description" content="1. 变量的显示与设置 设置变量和Python等脚本语言一样，在shell里，使用变量之前并不需要事先为它们做出声明，只是通过使用它们(比如当你给它们赋初始值时)来创建它们。 1VARIABLE_NAME=value">
+<meta property="og:description" content="1. 变量的显示与设置 设置变量和Python等脚本语言一样，在shell里，使用变量之前并不需要事先为它们做出声明，只是通过使用它们(比如当你给它们赋初始值时)来创建它们。 1$ VARIABLE_NAME=value">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-23T03:40:36.364Z">
+<meta property="og:updated_time" content="2017-08-27T06:50:36.330Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="变量">
-<meta name="twitter:description" content="1. 变量的显示与设置 设置变量和Python等脚本语言一样，在shell里，使用变量之前并不需要事先为它们做出声明，只是通过使用它们(比如当你给它们赋初始值时)来创建它们。 1VARIABLE_NAME=value">
+<meta name="twitter:description" content="1. 变量的显示与设置 设置变量和Python等脚本语言一样，在shell里，使用变量之前并不需要事先为它们做出声明，只是通过使用它们(比如当你给它们赋初始值时)来创建它们。 1$ VARIABLE_NAME=value">
 
 
 
@@ -445,7 +445,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,383
+                  1,654
                 </span>
               
 
@@ -461,7 +461,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  5
+                  6
                 </span>
               
             </div>
@@ -484,16 +484,16 @@
       
         <h1 id="变量的显示与设置">1. 变量的显示与设置</h1><ul>
 <li><p>设置变量<br>和Python等脚本语言一样，在shell里，使用变量之前并不需要事先为它们做出声明，只是通过使用它们(比如当你给它们赋初始值时)来创建它们。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">VARIABLE_NAME=value</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ VARIABLE_NAME=value</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <a id="more"></a>
 <ul>
 <li><p>显示变量的内容<br>通过在变量名前加一个<code>$</code>符号来访问它的内容。一种检查变量内容的简单方式就是在变量名前加一个<code>$</code>符号，再用<code>echo</code>命令将它的内容输出到终端上。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo $变量名</div><div class="line">echo $&#123;变量名&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">echo</span> $变量名</div><div class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;变量名&#125;</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>取消变量</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">unset 变量名</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">unset</span> 变量名</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <h1 id="变量的约定">2. 变量的约定</h1><ol>
@@ -501,16 +501,16 @@
 <ul>
 <li><p>双引号<br>把<code>$变量表达式</code>放在双引号中，程序执行到这一行时会把变量替换为它的值，如<code>var=&quot;long is $LONG&quot;</code>，则<code>echo $var</code>可得<code>long is en_US</code>。</p>
 </li>
-<li><p>单引号<br>把<code>$变量表达式</code>放在单引号中，不会发生替换现象，如<code>ar=&quot;long is $LONG&quot;</code>，则<code>echo $ar</code>可得<code>long is $LONG</code>。<br>还可以在<code>$</code>字符前面加上一个<code>\</code>字符取消它的特殊含义。</p>
+<li><p>单引号<br>把<code>$变量表达式</code>放在单引号中，不会发生替换现象，如<code>var=&#39;long is $LONG&#39;</code>，则<code>echo $ar</code>可得<code>long is $LONG</code>。<br>还可以在<code>$</code>字符前面加上一个<code>\</code>字符取消它的特殊含义。</p>
 </li>
 </ul>
 <p>所以<strong>字符串通常都放在双引号中，以防止变量被空白字符分开，同时又允许<code>$</code>扩展</strong>。</p>
 </li>
 <li><p>为了增加一个变量的内容时，则可用<code>$变量名</code>或<code>${变量名}</code>累加内容，如下所示：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> PATH=$PATH:/home/bin</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ PATH=<span class="variable">$PATH</span>:/home/bin</div></pre></td></tr></table></figure>
 </li>
 <li><p><strong>`…`</strong>或<code>$(...)</code>获取子进程输出<br>在一串命令中，还需要使用通过其他命令提供的信息，可以使用反引号<strong>`命令`</strong>或<code>$(命令)</code>。在一串命令内，在<strong>``</strong>之内或<code>$()</code>之内的命令将会被先执行，而执行的结果将作为外部的输入信息。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> echo `uname -r`</div><div class="line">4.4.0-66-generic</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">echo</span> `uname -r`</div><div class="line">4.4.0-66-generic</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <h1 id="环境变量">3. 环境变量</h1><p>当一个shell脚本开始执行时，一些变量会根据环境设置中的值进行初始化，这些变量称为环境变量。<br>环境变量通常用大写字母做名字，而用户在脚本程序里定义的变量通常用小写字母做名字。</p>
@@ -529,15 +529,26 @@
 <li><code>env</code>是<strong>environment</strong>(环境)的简写，功能是列出所有的环境变量</li>
 <li><code>set</code>查看所有变量，包含环境变量和自定义变量</li>
 </ol>
-<h2 id="临时导入自定义变量">3. 2. 临时导入自定义变量</h2><h3 id="export-自定义变量">3. 2. 1. export 自定义变量</h3><p>子进程会继承父进程的环境变量，但子进程不会继承父进程的自定义变量。执行<code>export 变量名</code>可以让该自定义变量在子进程中使用。但只在当前父进程及其子进程有用，当父子进程全部退出，该自定义变量也不再保留。</p>
-<h3 id="source-自定义环境变量">3. 2. 2. source 自定义环境变量</h3><h4 id="在脚本中-export-自定义的环境变量">3. 2. 2. 1. 在脚本中 export 自定义的环境变量</h4><p>如果在shell脚本中export环境变量，执行完脚本后，查看该环境变量竟然看不到。</p>
+<h2 id="导出环境变量">3. 2. 导出环境变量</h2><h3 id="临时导出自定义变量">3. 2. 1. 临时导出自定义变量</h3><h4 id="export-自定义变量">3. 2. 1. 1. export 自定义变量</h4><p><code>export</code>命令将作为它的参数的变量导出到子shell中，并使之在子shell中有效。子进程会继承父进程的环境变量，但不会继承父进程的自定义变量。也就是说，在一个shell中被创建的变量在这个shell调用的下级(子)shell中是不可用的。执行<code>export 变量名</code>可以让这些自定义变量在子进程中使用。但只在当前父进程及其子进程有用，当父子进程全部退出，该自定义变量也不再保留。</p>
+<p>我们用下面两个脚本<em>export1</em>和<em>export2</em>来说明它的用法。</p>
+<ol>
+<li><p>先列出脚本程序<code>export2</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$foo</span>"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$bar</span>"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>然后是脚本<em>export1</em>。在这个脚本的结尾，我们调用了<em>export2</em>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"></div><div class="line">foo=<span class="string">"The first meta-syntactic variable"</span></div><div class="line"><span class="built_in">export</span> bar=<span class="string">"The second meta-syntactic variable"</span></div><div class="line"></div><div class="line">export2</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>运行这个脚本程序，你将得到如下的输出：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ./export1</div><div class="line"></div><div class="line">The second meta-syntactic variable</div></pre></td></tr></table></figure></p>
+<p>解析：<em>export2</em>脚本只是回显两个变量的值。<em>export1</em>脚本同时设置两个变量的值，但只导出变量<code>bar</code>，所以当它其后调用<code>export2</code>时，变量<code>foo</code>的值已丢失，但变量<code>bar</code>的值已被导出到第二个脚本中。脚本输出中的第一个空行的出现是因为<code>$foo</code>在<em>export2</em>中没有定义，回显一个<code>null</code>变量将输出一个空行。</p>
+<h4 id="source-自定义环境变量">3. 2. 1. 2. source 自定义环境变量</h4><h5 id="在脚本中-export-自定义的环境变量">3. 2. 1. 2. 1. 在脚本中 export 自定义的环境变量</h5><p>如果在shell脚本中export环境变量，执行完脚本后，查看该环境变量竟然看不到。</p>
 <p>为什么在shell脚本里用export环境变量之后，当shell执行完了，用set命令看不到呢？但是如果直接在终端里export环境变量用set是可以看到的？</p>
 <p>这里的关键在于理解<strong>shell脚本的执行方法</strong>。当执行一个shell脚本时，是在当前终端所在的shell fork出一个子shell执行该脚本，执行完毕再返回终端所在的shell。因此在脚本中设置了环境变量，它只在fork出来的子shell以及该子shell的子shell，也就是子shell和子子shell中生效，子shell只能继承父shell的环境变量，而不能修改父shell的环境变量，所以子shell执行结束，父shell的环境变量没有改变，看不到脚本中设置的环境变量的值。</p>
-<h4 id="解决办法">3. 2. 2. 2. 解决办法</h4><p>那么如何让脚本的环境变量在脚本执行之后仍然对当前终端存在呢？用<code>source</code>或<code>.(dot)</code>。明确告诉shell不要fork执行脚本，而是在当前的shell执行，这样环境变量就可以保存下来了。</p>
+<h5 id="解决办法">3. 2. 1. 2. 2. 解决办法</h5><p>那么如何让脚本的环境变量在脚本执行之后仍然对当前终端存在呢？用<code>source</code>或<code>.(dot)</code>。明确告诉shell不要fork执行脚本，而是在当前的shell执行，这样环境变量就可以保存下来了。</p>
 <p>source 命令用法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">source filename # (source 通常用.来代替)</div><div class="line">source test.sh # 与 . test.sh 是相同的</div></pre></td></tr></table></figure>
-<h2 id="永久导入自定义变量">3. 3. 永久导入自定义变量</h2><p><code>HOME</code>目录下的<em>.profile</em>文件用来保存当前用户设置的环境变量。<br>通过编辑<code>.profile</code>文件，在里面通过<code>export</code>语句导入自定义的变量，可以永久导入该自定义的变量。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export MAIL_USERNAME="15091521590@163.com"</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">source</span> filename <span class="comment"># (source 通常用.来代替)</span></div><div class="line">$ <span class="built_in">source</span> test.sh <span class="comment"># 与 . test.sh 是相同的</span></div></pre></td></tr></table></figure>
+<h3 id="永久导入自定义变量">3. 2. 2. 永久导入自定义变量</h3><p><code>HOME</code>目录下的<em>.profile</em>文件用来保存当前用户设置的环境变量。<br>通过编辑<code>.profile</code>文件，在里面通过<code>export</code>语句导入自定义的变量，可以永久导入该自定义的变量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">export</span> MAIL_USERNAME=<span class="string">"15091521590@163.com"</span></div></pre></td></tr></table></figure>
 <p>该语句永久导入用户自定义的<code>MAIL_USERNAME</code>变量。</p>
 
       
@@ -858,7 +869,7 @@ li {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#变量的显示与设置"><span class="nav-text">1. 变量的显示与设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量的约定"><span class="nav-text">2. 变量的约定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境变量"><span class="nav-text">3. 环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#显示环境变量"><span class="nav-text">3. 1. 显示环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#临时导入自定义变量"><span class="nav-text">3. 2. 临时导入自定义变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#export-自定义变量"><span class="nav-text">3. 2. 1. export 自定义变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#source-自定义环境变量"><span class="nav-text">3. 2. 2. source 自定义环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在脚本中-export-自定义的环境变量"><span class="nav-text">3. 2. 2. 1. 在脚本中 export 自定义的环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决办法"><span class="nav-text">3. 2. 2. 2. 解决办法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#永久导入自定义变量"><span class="nav-text">3. 3. 永久导入自定义变量</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#变量的显示与设置"><span class="nav-text">1. 变量的显示与设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量的约定"><span class="nav-text">2. 变量的约定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境变量"><span class="nav-text">3. 环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#显示环境变量"><span class="nav-text">3. 1. 显示环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出环境变量"><span class="nav-text">3. 2. 导出环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#临时导出自定义变量"><span class="nav-text">3. 2. 1. 临时导出自定义变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#export-自定义变量"><span class="nav-text">3. 2. 1. 1. export 自定义变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#source-自定义环境变量"><span class="nav-text">3. 2. 1. 2. source 自定义环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在脚本中-export-自定义的环境变量"><span class="nav-text">3. 2. 1. 2. 1. 在脚本中 export 自定义的环境变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决办法"><span class="nav-text">3. 2. 1. 2. 2. 解决办法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永久导入自定义变量"><span class="nav-text">3. 2. 2. 永久导入自定义变量</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
