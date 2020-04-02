@@ -98,6 +98,9 @@ theme: even #landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
-  type: git
-  repository: https://github.com/Wangzhike/Wangzhike.git
-  branch: master
+  - type: git
+    repo: https://github.com/Wangzhike/Wangzhike.github.io.git
+    branch: master
+  - type: git
+    repo: https://gh_token/Wangzhike/Wangzhike.github.io.git
+    branch: master
