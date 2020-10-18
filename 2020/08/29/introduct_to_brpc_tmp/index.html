@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="brpc初探"/><link rel="alternate" href="/atom.xml" title="秋雨的网络日志"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="https://wangzhike.github.io/2020/08/29/introduct_to_brpc_tmp/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "8KpzJjJmQpFfYru5DHFzpFOm-gzGzoHsz",
+      appKey: "uD6A86r04bsyRH0LiawOwzJ3"
+    });
+  </script><script>
+  window.config = {"leancloud":{"app_id":"8KpzJjJmQpFfYru5DHFzpFOm-gzGzoHsz","app_key":"uD6A86r04bsyRH0LiawOwzJ3"},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>brpc初探 - 秋雨的网络日志</title>
+  <meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="秋雨的网络日志" type="application/atom+xml">
+</head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">秋雨的网络日志</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">秋雨的网络日志</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">brpc初探
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-08-29
+        </span><span class="post-visits"
+             data-url="/2020/08/29/introduct_to_brpc_tmp/"
+             data-title="brpc初探">
+          阅读次数 0
+        </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-protobuf-service"><span class="toc-text">1. protobuf service</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-接口Interface"><span class="toc-text">1.1 接口Interface</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-存根Stub"><span class="toc-text">1.2 存根Stub</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-client"><span class="toc-text">2. client</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-brpc-Channel"><span class="toc-text">2.1 brpc::Channel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-brpc-Controller"><span class="toc-text">2.2 brpc::Controller</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-google-protobuf-closure"><span class="toc-text">2.3 google::protobuf::closure</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-google-protobuf-NewCallback"><span class="toc-text">2.3.1 google::protobuf::NewCallback()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-brpc-NewCallback"><span class="toc-text">2.3.2 brpc::NewCallback()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-server"><span class="toc-text">3. server</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>最近组里准备把我们的在线召回服务由proxygen http迁移到brpc调用，我负责调研下brpc相关内容。虽然早已久仰brpc的大名，但并没有特意了解过。本文以brpc提供的<code>echo_c++</code>例程入手学习，算是初探brpc的文字记录。</p>
+<a id="more"></a>
+
+<h1 id="1-protobuf-service"><a href="#1-protobuf-service" class="headerlink" title="1. protobuf service"></a>1. protobuf service</h1><p>brpc基于<a href="https://developers.google.com/protocol-buffers/docs/overview#services" target="_blank" rel="noopener">protobuf service</a>的RPC接口实现RPC服务。<br>RPC的请求（request）和回复（response）定义为protobuf的message，RPC服务的接口都由protobuf的service定义。protobuf编译器protoc根据protobuf service中选择的语言（<code>option cc_generic_services = true</code>）生成rpc服务的接口和stub存根。下面以<code>service EchoService</code>为例进行说明。</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">syntax=<span class="string">"proto2"</span>;</span><br><span class="line"><span class="keyword">package</span> echo;</span><br><span class="line"></span><br><span class="line"># 告诉protoc要生成C++ Service基类，如果是java或python，则应分别修改为java_generic_services和py_generic_services</span><br><span class="line"><span class="keyword">option</span> cc_generic_services = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">message</span> <span class="title">EchoRequest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">string</span> <span class="class"><span class="keyword">message</span> = 1;</span></span><br><span class="line"><span class="class">&#125;;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">message</span> EchoResponse </span>&#123;</span><br><span class="line">    <span class="keyword">required</span> <span class="built_in">string</span> <span class="class"><span class="keyword">message</span> = 1;</span></span><br><span class="line"><span class="class">&#125;;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">service</span> EchoService </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">rpc</span> Echo (EchoRequest) <span class="keyword">returns</span> (EchoResponse)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-1-接口Interface"><a href="#1-1-接口Interface" class="headerlink" title="1.1 接口Interface"></a>1.1 接口Interface</h2><p>使用protoc编译这个<code>.proto</code>，将生成同名的<code>EchoService</code>类表示这个RPC服务。对service中定义的每个rpc方法（如<code>rpc Echo (EchoRequest) returns (EchoResponse)</code>），生成的<code>EchoService</code>类中都由一个对应的同名虚函数（如<code>Echo</code>）。<br>这些生成的方法是虚函数，但不是纯虚函数。默认实现只是调用<code>controller-&gt;SetFailed()</code>并带有一条错误信息，指出该方法未实现，然后调用<code>done</code>回调。在实现自己的服务时，你必须子类化（subclass）生成的服务并适当实现它的方法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EchoService</span> :</span> <span class="keyword">public</span> ::google::protobuf::Service &#123;</span><br><span class="line"> <span class="keyword">protected</span>:</span><br><span class="line">  <span class="comment">// This class should be treated as an abstract interface.</span></span><br><span class="line">  <span class="function"><span class="keyword">inline</span> <span class="title">EchoService</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="keyword">virtual</span> ~EchoService();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">typedef</span> EchoService_Stub Stub;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">const</span> ::google::<span class="function">protobuf::ServiceDescriptor* <span class="title">descriptor</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Echo</span><span class="params">(::google::protobuf::RpcController* controller,</span></span></span><br><span class="line"><span class="function"><span class="params">                       <span class="keyword">const</span> ::echo::EchoRequest* request,</span></span></span><br><span class="line"><span class="function"><span class="params">                       ::echo::EchoResponse* response,</span></span></span><br><span class="line"><span class="function"><span class="params">                       ::google::protobuf::Closure* done)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// implements Service ----------------------------------------------</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> ::google::<span class="function">protobuf::ServiceDescriptor* <span class="title">GetDescriptor</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">CallMethod</span><span class="params">(<span class="keyword">const</span> ::google::protobuf::MethodDescriptor* method,</span></span></span><br><span class="line"><span class="function"><span class="params">                  ::google::protobuf::RpcController* controller,</span></span></span><br><span class="line"><span class="function"><span class="params">                  <span class="keyword">const</span> ::google::protobuf::Message* request,</span></span></span><br><span class="line"><span class="function"><span class="params">                  ::google::protobuf::Message* response,</span></span></span><br><span class="line"><span class="function"><span class="params">                  ::google::protobuf::Closure* done)</span></span>;</span><br><span class="line">  <span class="keyword">const</span> ::google::<span class="function">protobuf::Message&amp; <span class="title">GetRequestPrototype</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">const</span> ::google::protobuf::MethodDescriptor* method)</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="keyword">const</span> ::google::<span class="function">protobuf::Message&amp; <span class="title">GetResponsePrototype</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">const</span> ::google::protobuf::MethodDescriptor* method)</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EchoService);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-存根Stub"><a href="#1-2-存根Stub" class="headerlink" title="1.2 存根Stub"></a>1.2 存根Stub</h2><p>protoc也为中每个服务接口生成了一个Stub实现，客户端使用该Stub实现向实现了该service的服务器发送请求。对于上面的<code>service EchoService</code>，Stub实现被定义为<code>class EchoService_Stub</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EchoService_Stub</span> :</span> <span class="keyword">public</span> EchoService &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  EchoService_Stub(::google::protobuf::RpcChannel* channel);</span><br><span class="line">  EchoService_Stub(::google::protobuf::RpcChannel* channel,</span><br><span class="line">                   ::google::protobuf::Service::ChannelOwnership ownership);</span><br><span class="line">  ~EchoService_Stub();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">inline</span> ::google::<span class="function">protobuf::RpcChannel* <span class="title">channel</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> channel_; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// implements EchoService ------------------------------------------</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Echo</span><span class="params">(::google::protobuf::RpcController* controller,</span></span></span><br><span class="line"><span class="function"><span class="params">                       <span class="keyword">const</span> ::echo::EchoRequest* request,</span></span></span><br><span class="line"><span class="function"><span class="params">                       ::echo::EchoResponse* response,</span></span></span><br><span class="line"><span class="function"><span class="params">                       ::google::protobuf::Closure* done)</span></span>;</span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  ::google::protobuf::RpcChannel* channel_;</span><br><span class="line">  <span class="keyword">bool</span> owns_channel_;</span><br><span class="line">  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EchoService_Stub);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Stub已将protobuf service中的每个方法实现为围绕channel（around the channel）的一个wrapper。调用Stub的其中一个方法就是简单地调用<code>channel-&gt;CallMethod()</code>。Stub将所有调用转发到<code>RpcChannel</code>，其又是一个抽象接口，你必须根据自己的RPC系统具体实现。换而言之，生成的Stub提供了一个类型安全的接口，用于进行基于protobuf的RPC调用，而无需将你锁定到任何特定的RPC实现中。</p>
+<p>Stub实现是生成的service类的子类，而server在实现自己的rpc服务时，也必须子类化生成的service类。也就是说rpc的client实现（class EchoService_Stub）以及rpc server实现（class EchoService的子类）都是生成的类（class EchoService）的子类。<br>综上，<code>class EchoService</code>由server继承实现，是rpc对应的实现。<code>class EchoServcie_Stub</code>由client调用，向实现了<code>class EchoService</code>的server发送请求。protobuf service不包括RPC的实现。但是，它包含了将生成的service类（EchoService接口、EchoServer_Stub类）连接到你选择的任意RPC实现所需的所有工具。我们只需要提供<code>RpcChannel</code>和<code>RpcController</code>的实现。</p>
+<h1 id="2-client"><a href="#2-client" class="headerlink" title="2. client"></a>2. client</h1><p>如前所述，pb service不包括RPC的实现。但是，它包含了将生成的service类（EchoService接口、EchoServer_Stub类）连接到你选择的任意RPC实现所需的所有工具。我们只需要提供<code>RpcChannel</code>和<code>RpcController</code>的实现。但是如果client要实现异步访问，我们还需要提供<code>Closure</code>的实现。<br>我们来看下rpc client中<code>RpcChannel</code>和<code>RpcController</code>的实现，以及<code>Closure</code>的用法。</p>
+<h2 id="2-1-brpc-Channel"><a href="#2-1-brpc-Channel" class="headerlink" title="2.1 brpc::Channel"></a>2.1 <code>brpc::Channel</code></h2><p><code>brpc::Channel</code>代表了与一台或多台服务器的交互通道（communication line）。</p>
+<h2 id="2-2-brpc-Controller"><a href="#2-2-brpc-Controller" class="headerlink" title="2.2 brpc::Controller"></a>2.2 <code>brpc::Controller</code></h2><p><code>brpc::Controller</code>调解（mediates）单个方法调用。controller的主要目的是提供一种方法来操纵（manipulate）每个RPC调用的设置，并找出有关RPC级别的错误。</p>
+<h2 id="2-3-google-protobuf-closure"><a href="#2-3-google-protobuf-closure" class="headerlink" title="2.3 google::protobuf::closure"></a>2.3 <code>google::protobuf::closure</code></h2><p><code>google::protobuf::closure</code>是回调的抽象接口。异步调用RPC时，必须提供一个闭包（closure）以便在过程（procedure）完成时调用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LIBPROTOBUF_EXPORT</span> <span class="title">Closure</span> &#123;</span></span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  Closure() &#123;&#125;</span><br><span class="line">  <span class="keyword">virtual</span> ~Closure();</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Run</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(Closure);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>由于<code>google::protobuf::closure::Run()</code>是纯虚函数，因此可以将继承并实现该接口的子类对象可以作为异步访问时的回调对象。更简单的，是使用<code>NewCallback()</code>函数，自动构造一个使用一组特定参数来调用特定函数或方法的闭包。</p>
+<h3 id="2-3-1-google-protobuf-NewCallback"><a href="#2-3-1-google-protobuf-NewCallback" class="headerlink" title="2.3.1 google::protobuf::NewCallback()"></a>2.3.1 <code>google::protobuf::NewCallback()</code></h3><p>目前<code>goole::protobuf::NewCallback()</code>函数支持绑定零、一或两个参数。使用<code>NewCallback()</code>创建的回调在执行时会自动删除。<code>NewCallback()</code>创建的回调仅且只能被调用一次（is to be called exactly once），其通常是用于RPC回调。<br>需要注意，<code>NewCallback()</code>对于参数类型比较敏感。通常，为参数绑定提供的值必须与回调函数接受的类型完全匹配（exactly match）。并且，参数不能是引用。但是，正确类型的指针可以正常工作。</p>
+<h3 id="2-3-2-brpc-NewCallback"><a href="#2-3-2-brpc-NewCallback" class="headerlink" title="2.3.2 brpc::NewCallback()"></a>2.3.2 <code>brpc::NewCallback()</code></h3><p>由于protobuf 3把NewCallback设置为私有，r32035后brpc把NewCallback独立于<code>src/brpc/callback.h</code>并增加了一些重载。<code>brpc::NewCallback()</code>最多支持10个参数，类型要求同<code>google::protobuf::NewCallback()</code>。</p>
+<h1 id="3-server"><a href="#3-server" class="headerlink" title="3. server"></a>3. server</h1>
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://wangzhike.github.io">秋雨</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://wangzhike.github.io/2020/08/29/introduct_to_brpc_tmp/">https://wangzhike.github.io/2020/08/29/introduct_to_brpc_tmp/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/%E5%BE%AE%E4%BF%A1%E8%B5%9E%E8%B5%8F%E7%A0%81.jpeg" title="wechat">
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        
+        <nav class="post-nav"><a class="next" href="/2020/08/23/rvalue_reference/">
+        <span class="next-text nav-default">右值引用</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="utterances-container"></div>
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:956318206@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/Wangzhike" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://www.zhihu.com/people/qiuyu_mac" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">秋雨</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script>
+    var container = document.getElementById('utterances-container')
+    var script = document.createElement('script')
+    script.src = 'https://utteranc.es/client.js'
+    script.setAttribute('repo', 'Wangzhike/utterance_comment')
+    script.setAttribute('issue-term', 'title')
+    script.setAttribute('theme', 'github-light')
+    script.setAttribute('label', 'utterances')
+    script.crossorigin = 'anonymous'
+    script.async = true
+
+    container.appendChild(script)
+  </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

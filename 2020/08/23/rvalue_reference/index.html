@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="右值引用"/><link rel="alternate" href="/atom.xml" title="秋雨的网络日志"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="https://wangzhike.github.io/2020/08/23/rvalue_reference/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "8KpzJjJmQpFfYru5DHFzpFOm-gzGzoHsz",
+      appKey: "uD6A86r04bsyRH0LiawOwzJ3"
+    });
+  </script><script>
+  window.config = {"leancloud":{"app_id":"8KpzJjJmQpFfYru5DHFzpFOm-gzGzoHsz","app_key":"uD6A86r04bsyRH0LiawOwzJ3"},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>右值引用 - 秋雨的网络日志</title>
+  <meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="秋雨的网络日志" type="application/atom+xml">
+</head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">秋雨的网络日志</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">秋雨的网络日志</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">右值引用
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-08-23
+        </span><span class="post-visits"
+             data-url="/2020/08/23/rvalue_reference/"
+             data-title="右值引用">
+          阅读次数 0
+        </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-左值与右值"><span class="toc-text">1. 左值与右值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-实现移动语义"><span class="toc-text">2. 实现移动语义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-完美转发"><span class="toc-text">3. 完美转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-左值引用函数参数"><span class="toc-text">3.1 左值引用函数参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-右值引用函数参数"><span class="toc-text">3.2 右值引用函数参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-std-forward-lt-Arg-gt-arg"><span class="toc-text">3.3 std::forward&lt;Arg&gt;(arg)</span></a></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><p>本文主要参考<a href="http://thbecker.net/articles/rvalue_references/section_01.html" target="_blank" rel="noopener">C++ Rvalue References Explained</a>和C++ Primer第五版。</p>
+<p>右值引用主要用于解决两个问题：</p>
+<ol>
+<li>实现移动语义</li>
+<li>完美转发<a id="more"></a>
+
+</li>
+</ol>
+<h2 id="1-左值与右值"><a href="#1-左值与右值" class="headerlink" title="1. 左值与右值"></a>1. 左值与右值</h2><p>简单而言，左值（lvalue）是一个表示（refers to）存储位置的表达式，它允许我们通过<code>&amp;</code>运算符获取该存储位置的地址。右值（rvalue）则是不是左值的表达式。因此，左值有持久的状态，而右值要么是字面值常量，要么是在表达式求值过程中创建的临时对象，临时对象的状态是短暂的。<br>左值引用（lvalue reference）用于绑定到一个左值上，通过<code>&amp;</code>来声明左值引用。常量左值引用也可以绑定到一个右值上。右值引用（rvalue reference）必须绑定到右值上，除了字面值常量外，该右值是一个将要销毁的对象。因此，我们可以从绑定到右值引用的对象“窃取”状态。不能将一个右值引用直接绑定到一个左值上，通过<code>&amp;&amp;</code>来声明右值引用。</p>
+<h2 id="2-实现移动语义"><a href="#2-实现移动语义" class="headerlink" title="2. 实现移动语义"></a>2. 实现移动语义</h2><p>要实现移动语义，首先对象所属的类必须定义自己的移动构造函数和移动赋值运算符。对于<code>Class X</code>而言，移动构造函数和移动赋值运算符的接口为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">X(X &amp;&amp;rhs) <span class="keyword">noexcept</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">X&amp; <span class="keyword">operator</span>=(X &amp;&amp; rhs) <span class="keyword">noexcept</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将移动构造函数和移动赋值运算符标记为<code>noexcept</code>，显示地告诉标准库我们的移动操作不会抛出异常，可以安全使用。这样在重新分配内存等适用移动语义的地方，标准库可以使用我们定义的移动操作而不是拷贝操作。<br>为了在普通函数和成员函数中实现移动语义，必须同时提供函数移动和拷贝两种版本。该函数使用和移动/拷贝构造函数和赋值运算符相同的参数模式——拷贝版本接受一个指向const的左值引用，移动版本接受一个指向非const的右值引用。以普通函数<code>foo</code>为例，两个版本的定义分别为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">const</span> X &amp;x)</span> </span>&#123;</span><br><span class="line">    X anotherX = x;     <span class="comment">// call X(X&amp; rths)</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(X &amp;&amp;x)</span> </span>&#123;</span><br><span class="line">    X anotherX = <span class="built_in">std</span>::<span class="built_in">move</span>(x);     <span class="comment">// call X(X &amp;&amp;x)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般来说，我们不需要为<code>foo</code>函数定义接受一个<code>const X&amp;&amp;</code>或是一个（普通的）<code>X&amp;</code>参数的版本。当我们希望从实参“窃取”数据时，通常传递一个右值引用。为了达到这一目的，实参不能是const的。类似的，从一个对象进行拷贝的操作不应该改变该对象。因此，通常不需要定义一个接受一个（普通的）<code>X&amp;</code>参数的版本。</p>
+<p>我们注意到，<code>foo(X &amp;&amp;x)</code>中在赋值时使用了<code>std::move(x)</code>而不是直接使用形参<code>x</code>。这是实现移动语义的第二个关键点。核心问题是<strong>被声明为右值引用的变量是右值吗？</strong><br>实际上，<strong>被声明为右值引用的变量可以是左值或右值。区分的标准是：如果有名字（name），则为左值。否则，则是右值。</strong><br>上面的例子中，第二个<code>foo</code>函数的<code>x</code>被声明为右值引用，并且有名字，因此<code>x</code>是一个左值，要实现移动语义，必须使用<code>std::move(x)</code>将其转换为一个右值。下面的例子声明了一个右值引用并且没有名字，因此是一个右值：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">X&amp;&amp; <span class="title">bar</span><span class="params">()</span></span>;</span><br><span class="line">X x = bar();    <span class="comment">// calls X(X &amp;&amp;rhs) because the thing on the right side has no name</span></span><br></pre></td></tr></table></figure>
+<p>该规则背后的出发点是：允许移动语义默认应用于具有名字的对象，如<code>X anotherX = x</code>，会造成危险的混乱并且容易出错。因为我们刚刚移动的<code>x</code>，在后续的代码中仍然可以访问。而C++要求，在移动操作之后，移后源对象必须保持有效的、可析构的状态，并且用户不能对其值进行任何假设。但是这里的<code>x</code>可能在后面的代码中被读取，并且用户会认为<code>x</code>应该保持原来的值，而这个要求也是合理和直观的。因此，规则的前一半就应该为“如果右值引用有名字，则它是一个左值”。<br>而如果右值引用没有名字，则代表它是一个临时对象，可以知道其马上要被销户并且该对象没有其他用户，这两个特性意味着：可以自由接管该对象的资源。因此，规则的另一半就应该为“如果右值引用没有名字，则它是一个右值”。而且，这后一半规则可以使我们可以<strong>根据自己的意愿以一种受控的方式在左值上强制移动语义（force move semantics on lvualues）。这就是<code>std::move</code>的工作机制。</strong><code>std::move</code>可以接受一个左值，返回绑定到该左值上的右值引用，因为该右值引用没有名字，所以它是一个右值。也就是说，<code>std::move</code>将其参数转换为右值，如果该参数不是右值的话。并且它是通过隐藏名字来实现的。</p>
+<p><code>std::move</code>的内部实现可能如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="built_in">std</span> &#123;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">typename</span> remove_reference&lt;T&gt;::<span class="function">type&amp;&amp; <span class="title">move</span><span class="params">(T&amp;&amp; t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">typename</span> remove_reference&lt;T&gt;::type&amp;&amp;&gt;(t);</span><br><span class="line">&#125;</span><br><span class="line">&#125;   <span class="comment">// namespace std</span></span><br></pre></td></tr></table></figure>
+<p><code>std::move</code>的内部实现，基于这样一个规则：<strong>虽然不能将一个右值引用直接绑定到一个左值上，但可以显示地（通过<code>static_cast</code>）将一个左值转换为对应的右值引用类型。</strong>我们必须意识到，调用<code>std::move(x)</code>就意味着承诺：除了对<code>x</code>赋值和销毁它外，我们将不再使用它。在调用<code>std::move</code>之后，我们不能对移后源对象的值做任何假设。</p>
+<h2 id="3-完美转发"><a href="#3-完美转发" class="headerlink" title="3. 完美转发"></a>3. 完美转发</h2><p>对于模板类型参数的函数参数，转发就是参数传递，将函数实参传递给函数内部的另外一个函数。完美转发指的是，其转发效果就像外部函数不存在，内部函数直接被调用一样。具体而言，完美转发是指一个函数需要将一个或多个实参连同类型不变地转发给其他函数，我们需要保持被转发实参的所有性质，包括实参类型是否是const的以及实参是左值还是右值。<br>要实现完美转发，函数参数不能是值传递，否则无法转发引用实参，因此函数参数必须是模板类型参数的引用类型。</p>
+<h3 id="3-1-左值引用函数参数"><a href="#3-1-左值引用函数参数" class="headerlink" title="3.1 左值引用函数参数"></a>3.1 左值引用函数参数</h3><p>当一个函数参数是模板类型参数的左值引用时，只能传递给它一个左值。实参可以是<code>const</code>类型，也可以不是。如果实参是<code>const</code>的，则模板类型参数<code>T</code>将被推断为<code>const</code>类型。<br>如果一个函数参数的类型是<code>const T&amp;</code>，则可以传递给它任何类型的实参——一个对象（<code>const</code>或非<code>const</code>）、一个临时对象或是一个字面值常量。当函数参数本身是<code>const</code>时，<code>T</code>的类型推断的结果不会是一个<code>const</code>类型。<code>const</code>已经是函数参数类型的一部分；因此，它不会也是模板类型参数的一部分。</p>
+<p>可见，当函数参数是模板参数类型的左值引用时，只能转发左值实参（<code>T&amp;</code>），或可以接受任何类型的实参（<code>const T&amp;</code>）但将阻塞右值实参的移动语义，不能实现完美转发。</p>
+<h3 id="3-2-右值引用函数参数"><a href="#3-2-右值引用函数参数" class="headerlink" title="3.2 右值引用函数参数"></a>3.2 右值引用函数参数</h3><p>当一个函数参数是模板参数的右值引用时，正常的绑定规则告诉我们可以传递给它一个右值，此时类型推断过程类似于左值引用函数参数的推断过程，推断出的<code>T</code>的类型为该右值实参的类型：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">void</span> <span class="title">f3</span><span class="params">(T &amp;&amp;)</span></span>;</span><br><span class="line">f3(<span class="number">42</span>);     <span class="comment">// 实参是一个int类型的右值；模板参数T是int</span></span><br></pre></td></tr></table></figure>
+
+<p>除此之外，C++语言在正常绑定规则（向右值引用函数参数传递一个右值）之外定义了两个例外规则：</p>
+<ol>
+<li>第一个例外规则影响右值引用参数的推断如何进行。当我们将一个左值（如<code>i</code>）传递给函数的右值引用参数，且此右值引用指向模板参数类型（如<code>T&amp;&amp;</code>）时，虽然通常我们不能将一个右值引用绑定到一个左值上，但此时该绑定是合法的，编译器推断模板类型参数为实参的左值引用类型。因此，当我们调用<code>f3(i)</code>时，编译器推断<code>T</code>的类型为<code>int&amp;</code>，而非<code>int</code>。</li>
+<li>T被推断为<code>int&amp;</code>意味着<code>f3</code>的函数参数是一个类型<code>int&amp;</code>的右值引用。通常，我们不能直接定义一个引用的引用（因为引用是对象的别名，必须指向一个对象），但是，通过类型别名或通过模板类型参数间接定义是合法的。如果我们间接创建了一个引用的引用，则这些引用形成了“引用折叠”。除了右值引用的右值引用会折叠成右值引用外，其他引用都会折叠为一个普通的左值引用类型。即，对于一个给定类型<code>X</code>：<ul>
+<li><code>X&amp; &amp;</code>、<code>X&amp; &amp;&amp;</code>和<code>X&amp;&amp; &amp;</code>都折叠成类型<code>X&amp;</code></li>
+<li><code>X&amp;&amp; &amp;&amp;</code>折叠成<code>X&amp;&amp;</code></li>
+</ul>
+</li>
+</ol>
+<p>这两个规则导致了两个重要结果：</p>
+<ul>
+<li>如果一个函数参数是一个指向模板类型参数的右值引用（如<code>T &amp;&amp;</code>），则它可以被绑定到一个左值；且</li>
+<li>如果实参是一个左值，则推断出的模板类型参数将是一个左值引用，且函数参数将被实例化为一个左值引用参数（<code>T&amp;</code>）</li>
+</ul>
+<p>综上，函数参数是模板类型参数的右值引用类型时，可以传递给它任意类型的参数，而且可以保持参数的左值或右值属性，可以用于实现完美转发。</p>
+<h3 id="3-3-std-forward-lt-Arg-gt-arg"><a href="#3-3-std-forward-lt-Arg-gt-arg" class="headerlink" title="3.3 std::forward&lt;Arg&gt;(arg)"></a>3.3 <code>std::forward&lt;Arg&gt;(arg)</code></h3><p>函数参数是模板类型参数的右值引用，可以接受任意类型的参数且保持参数的左值或右值属性。但正如<a href="#2-实现移动语义">2. 实现移动语义</a>提到的，被声明为右值引用的变量可以是左值或右值。而在参数转发中，右值引用变量是函数参数，是有名字的，所以是左值，即使传递给该右值引用参数的是一个右值实参。<br>为了实现右值引用参数为右值实参时的移动语义，同时保证右值引用参数为左值时无移动语义，显然不能直接使用<code>std::move</code>处理右值引用参数，为此引入了<code>std::forward&lt;Arg&gt;(arg)</code>。<code>std::forward</code>是一个类模板，必须通过显示模板实参来调用，<code>std::forward</code>返回该显示实参类型的右值引用。即，<code>std::forward&lt;T&gt;</code>的返回类型是<code>T&amp;&amp;</code>。通常情况下，我们使用<code>std::forward</code>传递那些定义为模板类型参数的右值引用的函数参数。通过其返回类型上的引用折叠，<code>std::foward</code>可以保持给定实参的左值/右值属性。对于右值引用参数的左值实参可以返回一个左值类型，对于右值引用的右值实参则返回一个右值。其内部实现可能如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="built_in">std</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Arg&gt;</span><br><span class="line"><span class="function">Arg&amp;&amp; <span class="title">forward</span><span class="params">(<span class="keyword">typename</span> remove_reference&lt;Arg&gt;::type&amp; arg)</span> <span class="keyword">noexcept</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;Arg&amp;&amp;&gt;(arg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;   <span class="comment">// namespace std</span></span><br></pre></td></tr></table></figure>
+<p>实际上，<code>std::forward</code>中的<code>remove_reference</code>是不需要的，我们将<code>typename remove_reference&lt;Arg&gt;::type&amp;</code>替换为<code>Arg&amp;</code>也可以保证完美转发，但此时必须显示指明<code>Arg</code>为<code>std::forward</code>的模板类型参数。而<code>std::forward</code>中的<code>remove_reference</code>用于迫使我们必须这样做。</p>
+
+      </div>
+      <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://wangzhike.github.io">秋雨</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://wangzhike.github.io/2020/08/23/rvalue_reference/">https://wangzhike.github.io/2020/08/23/rvalue_reference/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/%E5%BE%AE%E4%BF%A1%E8%B5%9E%E8%B5%8F%E7%A0%81.jpeg" title="wechat">
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        
+        <nav class="post-nav"><a class="prev" href="/2020/08/29/introduct_to_brpc_tmp/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">brpc初探</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2020/03/08/tencent_with_me/">
+        <span class="next-text nav-default">我在鹅厂的九个月</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"><div id="utterances-container"></div>
+    </div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:956318206@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/Wangzhike" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://www.zhihu.com/people/qiuyu_mac" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">秋雨</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script>
+    var container = document.getElementById('utterances-container')
+    var script = document.createElement('script')
+    script.src = 'https://utteranc.es/client.js'
+    script.setAttribute('repo', 'Wangzhike/utterance_comment')
+    script.setAttribute('issue-term', 'title')
+    script.setAttribute('theme', 'github-light')
+    script.setAttribute('label', 'utterances')
+    script.crossorigin = 'anonymous'
+    script.async = true
+
+    container.appendChild(script)
+  </script><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

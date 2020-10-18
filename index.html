@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<link rel="alternate" href="/atom.xml" title="秋雨的网络日志"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0" />
+<link rel="canonical" href="https://wangzhike.github.io/"/>
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" /><script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0" />
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "8KpzJjJmQpFfYru5DHFzpFOm-gzGzoHsz",
+      appKey: "uD6A86r04bsyRH0LiawOwzJ3"
+    });
+  </script><script>
+  window.config = {"leancloud":{"app_id":"8KpzJjJmQpFfYru5DHFzpFOm-gzGzoHsz","app_key":"uD6A86r04bsyRH0LiawOwzJ3"},"toc":true,"fancybox":true,"pjax":"","latex":true};
+</script>
+
+    <title>秋雨的网络日志</title>
+  <meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="秋雨的网络日志" type="application/atom+xml">
+</head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">秋雨的网络日志</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">秋雨的网络日志</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/about/">
+            关于
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><section id="posts" class="posts"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2020/08/29/introduct_to_brpc_tmp/">brpc初探</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-08-29
+        </span><span class="post-visits"
+             data-url="/2020/08/29/introduct_to_brpc_tmp/"
+             data-title="brpc初探">
+          阅读次数 0
+        </span>
+        </div>
+    </header>
+
+    <div class="post-content"><p>最近组里准备把我们的在线召回服务由proxygen http迁移到brpc调用，我负责调研下brpc相关内容。虽然早已久仰brpc的大名，但并没有特意了解过。本文以brpc提供的<code>echo_c++</code>例程入手学习，算是初探brpc的文字记录。</p>
+          <div class="read-more">
+            <a href="/2020/08/29/introduct_to_brpc_tmp/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2020/08/23/rvalue_reference/">右值引用</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-08-23
+        </span><span class="post-visits"
+             data-url="/2020/08/23/rvalue_reference/"
+             data-title="右值引用">
+          阅读次数 0
+        </span>
+        </div>
+    </header>
+
+    <div class="post-content"><p>本文主要参考<a href="http://thbecker.net/articles/rvalue_references/section_01.html" target="_blank" rel="noopener">C++ Rvalue References Explained</a>和C++ Primer第五版。</p>
+<p>右值引用主要用于解决两个问题：</p>
+<ol>
+<li>实现移动语义</li>
+<li>完美转发</li></ol>
+          <div class="read-more">
+            <a href="/2020/08/23/rvalue_reference/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2020/03/08/tencent_with_me/">我在鹅厂的九个月</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-03-08
+        </span><span class="post-visits"
+             data-url="/2020/03/08/tencent_with_me/"
+             data-title="我在鹅厂的九个月">
+          阅读次数 0
+        </span>
+        </div>
+    </header>
+
+    <div class="post-content"><p>2019年7月13号，作为一名校招生，我在腾讯滨海大厦办理新员工入职。那时的我，离开校园没多久，怀揣着对未来的很多期待，少年气十足。看到自己所在的是游戏接入组，虽然也多少担心即将要从事的游戏AI后台开发跟游戏会有多大的牵扯，但心里还是比较乐观。也不容我多想，当天就前往金百合酒店开始为期一周的封培。</p>
+          <div class="read-more">
+            <a href="/2020/03/08/tencent_with_me/" class="read-more-link">阅读更多</a>
+          </div>
+        </div></article>
+      <nav class="pagination"></nav></section></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"><a href="mailto:956318206@qq.com" class="iconfont icon-email" title="email"></a>
+        <a href="https://github.com/Wangzhike" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+        <a href="http://www.zhihu.com/people/qiuyu_mac" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+        <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    </div><div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even" target="_blank" rel="noopener">Even</a>
+  </span>
+
+  <span class="copyright-year">&copy;2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">秋雨</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>
